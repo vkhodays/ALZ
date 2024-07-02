@@ -1,0 +1,74 @@
+trigger:
+  branches:
+    include:
+    - main
+    - feature/*
+    - release/*
+
+resources:
+  repositories:
+  - repository: ADO.Templates
+    type: git
+    name: 'Azure Landing Zones/ADO.Templates'
+    ref: 'refs/heads/main'
+  - repository: Terraform.LandingZones
+    type: git
+    name: 'Azure Landing Zones/Terraform.LandingZones'
+  - repository: Terraform.RBAC
+    type: git
+    name: 'Azure Landing Zones/Terraform.RBAC'
+
+parameters:
+- name: useMicrosoftAgents
+  displayName: Use Microsoft Hosted Agents (Greenfield)
+  type: boolean
+  default: false
+
+variables:
+- group: ADO.PATs
+
+stages:
+### RUN CHECKS ###
+- template: terraform/stages/terraform-checks.yaml@ADO.Templates
+  parameters:
+    pool:
+      ${{ if eq(parameters.useMicrosoftAgents, true) }}:
+        vmImage: 'ubuntu-latest' 
+      ${{ else }}:
+        name: 'Linux.AzureDevops.Ubuntu.2204.Prod'
+
+### DEPLOY TO DEV ###
+- template: ../templates/deploy-to-environment.yml
+  parameters:
+    platformEnvironment: 'Prod'
+    appEnvironment: 'dev'
+    dependsOn: RunChecks
+    pool:
+      ${{ if eq(parameters.useMicrosoftAgents, true) }}:
+        vmImage: 'ubuntu-latest' 
+      ${{ else }}:
+        name: 'Linux.AzureDevops.Ubuntu.2204.Prod'
+
+### DEPLOY TO PRE ###
+- template: ../templates/deploy-to-environment.yml
+  parameters:
+    platformEnvironment: 'Prod'
+    appEnvironment: 'pre'
+    dependsOn: RunChecks
+    pool:
+      ${{ if eq(parameters.useMicrosoftAgents, true) }}:
+        vmImage: 'ubuntu-latest' 
+      ${{ else }}:
+        name: 'Linux.AzureDevops.Ubuntu.2204.Prod'
+
+### DEPLOY TO PRD ###
+- template: ../templates/deploy-to-environment.yml
+  parameters:
+    platformEnvironment: 'Prod'
+    appEnvironment: 'prd'
+    dependsOn: RunChecks
+    pool:
+      ${{ if eq(parameters.useMicrosoftAgents, true) }}:
+        vmImage: 'ubuntu-latest' 
+      ${{ else }}:
+        name: 'Linux.AzureDevops.Ubuntu.2204.Prod'

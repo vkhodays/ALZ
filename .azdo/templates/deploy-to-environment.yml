@@ -1,0 +1,27 @@
+parameters:
+  platformEnvironment: ''
+  appEnvironment: ''
+  dependsOn:
+  - RunChecks
+  pool:
+    name: 'Linux.AzureDevops.Ubuntu.2204.Prod'
+
+stages:
+- template: terraform/stages/terraform-deploy.yaml@ADO.Templates
+  parameters:
+    name: 'Deploy${{ parameters.platformEnvironment }}_${{ parameters.appEnvironment }}'
+    environment: '${{ parameters.platformEnvironment }} - Landing Zones - App'
+    displayName: 'Deploy Terraform resources to Tenant: ${{ parameters.platformEnvironment }}, Env: ${{ parameters.appEnvironment }}'
+    pool: ${{ parameters.pool }}
+    dependsOn: ${{ parameters.dependsOn }}
+    variables:
+    - group: 'ALZ.Bootstrap.ResourceNames.${{ parameters.platformEnvironment }}'
+    - group: 'ADO.PATs'
+    terraformWorkingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
+    terraformServiceConnectionName: 'alz-management.id-alz-vendor.${{ parameters.platformEnvironment }}'
+    terraformSubscriptionId: $(subscription-management)
+    terraformBackendServiceConnectionName: 'alz-management.id-alz-vendor.${{ parameters.platformEnvironment }}'
+    terraformBackendSubscriptionId: $(subscription-management)
+    terraformBackendStorageAccountName: $(id-alz-vendor)
+    terraformBackendFilename: 'vendor-apps-${{ parameters.platformEnvironment }}-${{ parameters.appEnvironment }}.tfstate'
+    terraformCommandOptions: '-var core_storage_account_name=$(id-alz-core) -var platform_environment=${{ parameters.platformEnvironment }} -var app_environment=${{ parameters.appEnvironment }} -var devops_pat=$(PAT_VARIABLE_GROUPS)'

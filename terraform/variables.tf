@@ -60,7 +60,7 @@ variable "app_environment" {
 variable "billing_scope" {
   type        = string
   description = "The billing scope for the subscription"
-  default     = "/providers/Microsoft.Billing/billingAccounts/1d2eb514-b0a9-54a1-14c9-9675374f6f5a:75489ef1-7aa8-4587-9a38-f3e37c247b9b_2019-05-31/billingProfiles/7HDL-VSKN-BG7-PGB/invoiceSections/7HDL-VSKN-BG7-PGB"
+  default     = "/providers/Microsoft.Billing/billingAccounts/1d2eb514-b0a9-54a1-14c9-9675374f6f5a:75489ef1-7aa8-4587-9a38-f3e37c247b9b_2019-05-31/billingProfiles/7HDL-VSKN-BG7-PGB/invoiceSections/GCXM-DOXN-PJA-PGB"
 }
 
 variable "use_oidc" {

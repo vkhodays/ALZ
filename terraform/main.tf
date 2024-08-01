@@ -25,13 +25,13 @@ module "retail-xcenter" {
   subscription_ids     = local.subscription_ids
 
   virtual_networks = {
-    seastasia = {
+    southeastasia = {
       location = "southeastasia"
       address_space = {
         npd = ["10.212.2.0/28", "10.212.2.32/27"]
         prd = ["10.212.3.0/28", "10.212.3.32/27"]
       }
-      dns_servers = data.terraform_remote_state.core.outputs.hubs["southeastasia"].dns_servers
+      dns_servers = ["10.212.0.100"]
     }
   }
 

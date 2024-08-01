@@ -66,5 +66,5 @@ variable "billing_scope" {
 variable "use_oidc" {
   type        = bool
   description = "Use OpenID Connect to authenticate to AzureRM"
-  default     = false
+  default     = true
 }

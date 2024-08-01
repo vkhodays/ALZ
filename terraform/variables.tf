@@ -46,14 +46,14 @@ variable "platform_environment" {
 variable "app_environment" {
   type        = string
   description = "The subscription environment to deploy"
-  default     = "dev"
+  default     = "npd"
 
   validation {
     condition = contains(
-      ["dev", "pre", "prd"],
+      ["npd", "prd"],
       var.app_environment
     )
-    error_message = "Error: app_environment must be one of: dev, pre, prd."
+    error_message = "Error: app_environment must be one of: npd, prd."
   }
 }
 

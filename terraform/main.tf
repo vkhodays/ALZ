@@ -1,6 +1,4 @@
 locals {
-  #eastasia_virtual_hub_id = data.terraform_remote_state.core.outputs.azurerm_virtual_hub_ids["eastasia"]
-  southeastasia_virtual_hub_id = data.terraform_remote_state.core.outputs.azurerm_virtual_hub_ids["southeastasia"]
   subscription_ids = {
     identity     = data.terraform_remote_state.core.outputs.subscription_identity
     connectivity = data.terraform_remote_state.core.outputs.subscription_connectivity
@@ -8,9 +6,9 @@ locals {
   }
 }
 
-module "orca" {
+module "retail-xcenter" {
   # tflint-ignore: terraform_module_pinned_source
-  source = "git::https://dev.azure.com/RalphLauren/Azure%20Landing%20Zones/_git/Terraform.LandingZones?ref=20240718.1"
+  source = "git::https://dev.azure.com/RalphLauren/Azure%20Landing%20Zones/_git/Terraform.IaaSLandingZone?ref=feature/initial"
 
   providers = {
     azurerm = azurerm
@@ -19,40 +17,39 @@ module "orca" {
     time    = time
   }
 
+  primary_location = "eastus"
+
   platform_environment = var.platform_environment
   app_environment      = var.app_environment
   billing_scope        = var.billing_scope
   subscription_ids     = local.subscription_ids
 
   virtual_networks = {
-    main = {
-      azurerm_virtual_hub_id = local.southeastasia_virtual_hub_id
+    seastasia = {
+      location = "southeastasia"
       address_space = {
-        dev = ["172.28.200.0/26"]
-        pre = ["172.28.200.64/26"]
-        prd = ["172.28.200.192/26"]
+        npd = ["10.212.2.0/28", "10.212.2.32/27"]
+        prd = ["10.212.3.0/28", "10.212.3.32/27"]
       }
-      dns_servers = ["172.28.0.132", "172.28.128.132"]
+      dns_servers = data.terraform_remote_state.core.outputs.hubs["southeastasia"].dns_servers
     }
   }
 
   rbac = {
     template_name = "standard"
-    create_groups = var.app_environment == "dev"
   }
 
   directory_roles = [
     "Directory Readers"
   ]
-
-  devops_project_name = "Azure Landing Zones"
-  management_group    = "internal"
-  subscription_name   = "orca"
+  
+  management_group    = "retail-internal"
+  subscription_name   = "retail-xcenter"
   subscription_tags = {
-    WorkloadName        = "ALZ.Core"
+    WorkloadName        = "XCenter"
     DataClassification  = "General"
     BusinessCriticality = "Mission-critical"
-    BusinessUnit        = "Platform Operations"
-    OperationsTeam      = "Platform Operations"
+    BusinessUnit        = "Retail"
+    OperationsTeam      = "Retail"
   }
 }

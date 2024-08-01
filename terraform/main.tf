@@ -1,4 +1,5 @@
 locals {
+  # tflint-ignore: terraform_unused_declarations
   subscription_ids = {
     identity     = data.terraform_remote_state.core.outputs.subscription_identity
     connectivity = data.terraform_remote_state.core.outputs.subscription_connectivity

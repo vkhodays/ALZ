@@ -22,7 +22,6 @@ module "retail-xcenter" {
   platform_environment = var.platform_environment
   app_environment      = var.app_environment
   billing_scope        = var.billing_scope
-  subscription_ids     = local.subscription_ids
 
   virtual_networks = {
     southeastasia = {

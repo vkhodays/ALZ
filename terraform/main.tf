@@ -72,6 +72,7 @@ module "retail-xcenter" {
     }
   }
 
+  resource_group_creation_enabled = true
   resource_groups = {
     retail-xcenter = {
       name    = "rg-retail-xcenter"

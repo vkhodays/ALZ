@@ -9,7 +9,7 @@ locals {
 
 module "retail-xcenter" {
   # tflint-ignore: terraform_module_pinned_source
-  source = "git::https://dev.azure.com/RalphLauren/Azure%20Landing%20Zones/_git/Terraform.IaaSLandingZone?ref=feature/initial"
+  source = "git::https://dev.azure.com/RalphLauren/Azure%20Landing%20Zones/_git/Terraform.IaaSLandingZone?ref=20240802.9"
 
   providers = {
     azurerm = azurerm
@@ -34,34 +34,20 @@ module "retail-xcenter" {
       subnets = {
         npd = {
           subnet-retail-xcenter = {
-            subnet_cidr = ""
+            subnet_cidr = "10.212.2.32/27"
             security_rules = [
               {
-                name = "AllowVnetInBound"
+                name = "allow-https-inbound"
                 properties = {
-                  access                   = "Allow"
-                  description              = "Allow inbound traffic from all VMs in VNET"
-                  destinationAddressPrefix = "*"
-                  destinationPortRange     = "*"
+                  priority                 = 100
+                  description              = "Allow HTTPS inbound traffic"
                   direction                = "Inbound"
-                  priority                 = 100
-                  protocol                 = "*"
-                  sourceAddressPrefix      = "*"
-                  sourcePortRange          = "*"
-                }
-              },
-              {
-                name = "AllowVnetOutBound"
-                properties = {
                   access                   = "Allow"
-                  description              = "Allow outbound traffic from all VMs in VNET"
-                  destinationAddressPrefix = "*"
-                  destinationPortRange     = "*"
-                  direction                = "Outbound"
-                  priority                 = 100
-                  protocol                 = "*"
-                  sourceAddressPrefix      = "*"
+                  protocol                 = "Tcp"
                   sourcePortRange          = "*"
+                  destinationPortRange     = "443"
+                  sourceAddressPrefix      = "*"
+                  destinationAddressPrefix = "*"
                 }
               }
             ]
@@ -69,21 +55,6 @@ module "retail-xcenter" {
         }
       }
       dns_servers = ["10.212.0.100"]
-    }
-  }
-
-  resource_group_creation_enabled = true
-  resource_groups = {
-    retail-xcenter = {
-      name    = "rg-retail-xcenter"
-      location = "southeastasia"
-      tags = {
-        WorkloadName        = "XCenter"
-        DataClassification  = "General"
-        BusinessCriticality = "Mission-critical"
-        BusinessUnit        = "Retail"
-        OperationsTeam      = "Retail"
-      }
     }
   }
 
@@ -96,7 +67,7 @@ module "retail-xcenter" {
   ]
   
   management_group    = "retail-internal"
-  subscription_name   = "retail-xcenter"
+  subscription_name   = "xcenter"
   subscription_tags = {
     WorkloadName        = "XCenter"
     DataClassification  = "General"

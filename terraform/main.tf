@@ -31,7 +31,58 @@ module "retail-xcenter" {
         npd = ["10.212.2.0/28", "10.212.2.32/27"]
         prd = ["10.212.3.0/28", "10.212.3.32/27"]
       }
+      subnets = {
+        npd = {
+          subnet-retail-xcenter = {
+            subnet_cidr = ""
+            security_rules = [
+              {
+                name = "AllowVnetInBound"
+                properties = {
+                  access                   = "Allow"
+                  description              = "Allow inbound traffic from all VMs in VNET"
+                  destinationAddressPrefix = "*"
+                  destinationPortRange     = "*"
+                  direction                = "Inbound"
+                  priority                 = 100
+                  protocol                 = "*"
+                  sourceAddressPrefix      = "*"
+                  sourcePortRange          = "*"
+                }
+              },
+              {
+                name = "AllowVnetOutBound"
+                properties = {
+                  access                   = "Allow"
+                  description              = "Allow outbound traffic from all VMs in VNET"
+                  destinationAddressPrefix = "*"
+                  destinationPortRange     = "*"
+                  direction                = "Outbound"
+                  priority                 = 100
+                  protocol                 = "*"
+                  sourceAddressPrefix      = "*"
+                  sourcePortRange          = "*"
+                }
+              }
+            ]
+          }
+        }
+      }
       dns_servers = ["10.212.0.100"]
+    }
+  }
+
+  resource_groups = {
+    retail-xcenter = {
+      name    = "rg-retail-xcenter"
+      location = "southeastasia"
+      tags = {
+        WorkloadName        = "XCenter"
+        DataClassification  = "General"
+        BusinessCriticality = "Mission-critical"
+        BusinessUnit        = "Retail"
+        OperationsTeam      = "Retail"
+      }
     }
   }
 

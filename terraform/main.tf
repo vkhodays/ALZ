@@ -38,7 +38,7 @@ module "global-logitics-analytics" {
     "Directory Readers"
   ]
 
-  devops_project_name = "Global Logistics"
+  devops_project_name = "Azure Landing Zones" # "Global Logistics"
   management_group    = "corp-internal"
   subscription_name   = "global-logistics-analytics"
   subscription_tags = {

@@ -16,7 +16,6 @@ module "global-logitics-analytics" {
   statefile_pe_location = "southeastasia" # remove this when the eastus region is available
   billing_scope         = var.billing_scope
   subscription_ids      = local.subscription_ids
-  pim_enabled           = var.pim_enabled
 
   virtual_networks = {
     globlogsea = {
@@ -30,8 +29,9 @@ module "global-logitics-analytics" {
   }
 
   rbac = {
-    template_name = "standard"
-    create_groups = var.app_environment == "npd"
+    template_name          = "standard"
+    create_groups          = var.app_environment == "npd"
+    pim_enabled_if_defined = var.pim_enabled
   }
 
   directory_roles = [

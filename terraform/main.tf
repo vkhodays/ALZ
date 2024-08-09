@@ -8,7 +8,7 @@ locals {
 
 module "global-logitics-analytics" {
   # tflint-ignore: terraform_module_pinned_source
-  source = "git::https://dev.azure.com/RalphLauren/Azure%20Landing%20Zones/_git/Terraform.DataLandingZones?ref=main"
+  source = "git::https://dev.azure.com/RalphLauren/Azure%20Landing%20Zones/_git/Terraform.DataLandingZone?ref=main"
 
   platform_environment  = var.platform_environment
   app_environment       = var.app_environment

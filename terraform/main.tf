@@ -1,6 +1,4 @@
 locals {
-  #eastasia_virtual_hub_id = data.terraform_remote_state.core.outputs.azurerm_virtual_hub_ids["eastasia"]
-  southeastasia_virtual_hub_id = data.terraform_remote_state.core.outputs.azurerm_virtual_hub_ids["southeastasia"]
   subscription_ids = {
     identity     = data.terraform_remote_state.core.outputs.subscription_identity
     connectivity = data.terraform_remote_state.core.outputs.subscription_connectivity
@@ -8,51 +6,110 @@ locals {
   }
 }
 
-module "orca" {
+module "global-logitics-analytics" {
   # tflint-ignore: terraform_module_pinned_source
-  source = "git::https://dev.azure.com/RalphLauren/Azure%20Landing%20Zones/_git/Terraform.LandingZones?ref=20240718.1"
+  source = "git::https://dev.azure.com/RalphLauren/Azure%20Landing%20Zones/_git/Terraform.DataLandingZones?ref=main"
 
-  providers = {
-    azurerm = azurerm
-    azuread = azuread
-    azapi   = azapi
-    time    = time
-  }
-
-  platform_environment = var.platform_environment
-  app_environment      = var.app_environment
-  billing_scope        = var.billing_scope
-  subscription_ids     = local.subscription_ids
+  platform_environment  = var.platform_environment
+  app_environment       = var.app_environment
+  primary_location      = "eastus"
+  statefile_pe_location = "southeastasia" # remove this when the eastus region is available
+  billing_scope         = var.billing_scope
+  subscription_ids      = local.subscription_ids
 
   virtual_networks = {
-    main = {
-      azurerm_virtual_hub_id = local.southeastasia_virtual_hub_id
+    globlogsea = {
+      location = "southeastasia" # To be changed to eastus when the region is available
       address_space = {
-        dev = ["172.28.200.0/26"]
-        pre = ["172.28.200.64/26"]
-        prd = ["172.28.200.192/26"]
+        npd = ["10.212.2.0/28", "10.212.8.0/22"]
+        prd = ["10.212.2.16/28", "10.212.12.0/22"]
       }
-      dns_servers = ["172.28.0.132", "172.28.128.132"]
+      dns_servers = ["10.212.0.100"]
     }
   }
 
   rbac = {
     template_name = "standard"
-    create_groups = var.app_environment == "dev"
+    create_groups = var.app_environment == "npd"
   }
 
   directory_roles = [
     "Directory Readers"
   ]
 
-  devops_project_name = "Azure Landing Zones"
-  management_group    = "internal"
-  subscription_name   = "orca"
+  devops_project_name = "Global Logistics"
+  management_group    = "corp-internal"
+  subscription_name   = "global-logistics-analytics"
   subscription_tags = {
-    WorkloadName        = "ALZ.Core"
-    DataClassification  = "General"
+    WorkloadName        = "Global Logistics Analytics"
+    DataClassification  = "Confidential"
     BusinessCriticality = "Mission-critical"
-    BusinessUnit        = "Platform Operations"
-    OperationsTeam      = "Platform Operations"
+    BusinessUnit        = "Global Logistics"
+    OperationsTeam      = "Global Logistics"
+  }
+
+
+  analytics_environments = {
+    npd = {
+      dev = {
+        location = "southeastasia" # To be changed to eastus when the region is available
+
+        runtime_configuration = {
+          enabled     = true
+          subnet_cidr = "10.212.8.0/26"
+        }
+
+        storage_subnet_cidr                             = "10.212.8.64/27"
+        external_subnet_cidr                            = "10.212.8.96/27"
+        metadata_ingestion_subnet_cidr                  = "10.212.8.128/27"
+        shared_analytics_subnet_cidr                    = "10.212.8.160/27"
+        shared_analytics_databricks_private_subnet_cidr = "10.212.9.0/25"
+        shared_analytics_databricks_public_subnet_cidr  = "10.212.9.128/25"
+        db_administrator_entra_group_name               = "alz-global-platform_engineers"
+        tags = {
+          Environment = "Development"
+        }
+      }
+      qa = {
+        location = "southeastasia" # To be changed to eastus when the region is available
+
+        runtime_configuration = {
+          enabled     = true
+          subnet_cidr = "10.212.10.0/26"
+        }
+
+        storage_subnet_cidr                             = "10.212.10.64/27"
+        external_subnet_cidr                            = "10.212.10.96/27"
+        metadata_ingestion_subnet_cidr                  = "10.212.10.128/27"
+        shared_analytics_subnet_cidr                    = "10.212.10.160/27"
+        shared_analytics_databricks_private_subnet_cidr = "10.212.11.0/25"
+        shared_analytics_databricks_public_subnet_cidr  = "10.212.11.128/25"
+        db_administrator_entra_group_name               = "alz-global-platform_engineers"
+        tags = {
+          Environment = "QA"
+        }
+      }
+    }
+    prd = {
+      prd = {
+        location = "southeastasia" # To be changed to eastus when the region is available
+
+        runtime_configuration = {
+          enabled     = true
+          subnet_cidr = "10.212.12.0/26"
+        }
+
+        storage_subnet_cidr                             = "10.212.12.64/27"
+        external_subnet_cidr                            = "10.212.12.96/27"
+        metadata_ingestion_subnet_cidr                  = "10.212.12.128/27"
+        shared_analytics_subnet_cidr                    = "10.212.12.160/27"
+        shared_analytics_databricks_private_subnet_cidr = "10.212.13.0/24"
+        shared_analytics_databricks_public_subnet_cidr  = "10.212.14.0/24"
+        db_administrator_entra_group_name               = "alz-global-platform_engineers"
+        tags = {
+          Environment = "Production"
+        }
+      }
+    }
   }
 }

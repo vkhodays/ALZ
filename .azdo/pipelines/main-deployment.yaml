@@ -37,23 +37,11 @@ stages:
       ${{ else }}:
         name: 'Linux.AzureDevops.Ubuntu.2204.Prod'
 
-### DEPLOY TO DEV ###
+### DEPLOY TO NPD ###
 - template: ../templates/deploy-to-environment.yml
   parameters:
     platformEnvironment: 'Prod'
-    appEnvironment: 'dev'
-    dependsOn: RunChecks
-    pool:
-      ${{ if eq(parameters.useMicrosoftAgents, true) }}:
-        vmImage: 'ubuntu-latest' 
-      ${{ else }}:
-        name: 'Linux.AzureDevops.Ubuntu.2204.Prod'
-
-### DEPLOY TO PRE ###
-- template: ../templates/deploy-to-environment.yml
-  parameters:
-    platformEnvironment: 'Prod'
-    appEnvironment: 'pre'
+    appEnvironment: 'npd'
     dependsOn: RunChecks
     pool:
       ${{ if eq(parameters.useMicrosoftAgents, true) }}:

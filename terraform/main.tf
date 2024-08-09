@@ -16,6 +16,7 @@ module "global-logitics-analytics" {
   statefile_pe_location = "southeastasia" # remove this when the eastus region is available
   billing_scope         = var.billing_scope
   subscription_ids      = local.subscription_ids
+  pim_enabled           = var.pim_enabled
 
   virtual_networks = {
     globlogsea = {

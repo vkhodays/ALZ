@@ -10,6 +10,13 @@ module "global-logitics-analytics" {
   # tflint-ignore: terraform_module_pinned_source
   source = "git::https://dev.azure.com/RalphLauren/Azure%20Landing%20Zones/_git/Terraform.DataLandingZone?ref=main"
 
+  providers = {
+    azurerm = azurerm
+    azuread = azuread
+    azapi   = azapi
+    time    = time
+  }
+
   platform_environment  = var.platform_environment
   app_environment       = var.app_environment
   primary_location      = "eastus"

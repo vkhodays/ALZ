@@ -47,7 +47,7 @@ module "global-logitics-analytics" {
 
   devops_project_name = "Azure Landing Zones" # "Global Logistics"
   management_group    = "corp-internal"
-  subscription_name   = "global-logistics-analytics"
+  subscription_name   = "logistics-analytics"
   subscription_tags = {
     WorkloadName        = "Global Logistics Analytics"
     DataClassification  = "Confidential"

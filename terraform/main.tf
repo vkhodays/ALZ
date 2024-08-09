@@ -28,8 +28,8 @@ module "global-logitics-analytics" {
     globlogsea = {
       location = "southeastasia" # To be changed to eastus when the region is available
       address_space = {
-        npd = ["10.212.2.0/28", "10.212.8.0/22"]
-        prd = ["10.212.2.16/28", "10.212.12.0/22"]
+        npd = ["10.212.2.16/28", "10.212.8.0/22"]
+        prd = ["10.212.2.32/28", "10.212.12.0/22"]
       }
       dns_servers = ["10.212.0.100"]
     }

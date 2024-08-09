@@ -45,7 +45,7 @@ module "global-logitics-analytics" {
     "Directory Readers"
   ]
 
-  devops_project_name = "Azure Landing Zones" # "Global Logistics"
+  devops_project_name = "Logistics Analytics Data Platform"
   management_group    = "corp-internal"
   subscription_name   = "logistics-analytics"
   subscription_tags = {
@@ -67,6 +67,7 @@ module "global-logitics-analytics" {
           subnet_cidr = "10.212.8.0/26"
         }
 
+        vnet_key                                        = "globlogsea"
         storage_subnet_cidr                             = "10.212.8.64/27"
         external_subnet_cidr                            = "10.212.8.96/27"
         metadata_ingestion_subnet_cidr                  = "10.212.8.128/27"
@@ -86,6 +87,7 @@ module "global-logitics-analytics" {
           subnet_cidr = "10.212.10.0/26"
         }
 
+        vnet_key                                        = "globlogsea"
         storage_subnet_cidr                             = "10.212.10.64/27"
         external_subnet_cidr                            = "10.212.10.96/27"
         metadata_ingestion_subnet_cidr                  = "10.212.10.128/27"
@@ -107,6 +109,7 @@ module "global-logitics-analytics" {
           subnet_cidr = "10.212.12.0/26"
         }
 
+        vnet_key                                        = "globlogsea"
         storage_subnet_cidr                             = "10.212.12.64/27"
         external_subnet_cidr                            = "10.212.12.96/27"
         metadata_ingestion_subnet_cidr                  = "10.212.12.128/27"

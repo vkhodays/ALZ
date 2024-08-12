@@ -141,6 +141,7 @@ module "retail-storesystems" {
   platform_environment = var.platform_environment
   app_environment      = var.app_environment
   billing_scope        = var.billing_scope
+  subscription_ids     = local.subscription_ids
 
   virtual_networks = {
     southeastasia = {
@@ -155,7 +156,9 @@ module "retail-storesystems" {
   }
 
   rbac = {
-    template_name = "standard"
+    template_name          = "standard"
+    create_groups          = var.app_environment == "npd"
+    pim_enabled_if_defined = var.pim_enabled
   }
 
   directory_roles = [
@@ -164,7 +167,7 @@ module "retail-storesystems" {
 
   devops_project_name = "Retail - Store Systems"
   management_group    = "retail-internal"
-  subscription_name   = "storesystems"
+  subscription_name   = "retail-storesystems"
   subscription_tags = {
     WorkloadName        = "Store Systems"
     DataClassification  = "General"

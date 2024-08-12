@@ -124,3 +124,52 @@ module "global-logitics-analytics" {
     }
   }
 }
+
+module "retail-storesystems" {
+  # tflint-ignore: terraform_module_pinned_source
+  source = "git::https://dev.azure.com/RalphLauren/Azure%20Landing%20Zones/_git/Terraform.LandingZones?ref=main"
+
+  providers = {
+    azurerm = azurerm
+    azuread = azuread
+    azapi   = azapi
+    time    = time
+  }
+
+  primary_location = "eastus"
+
+  platform_environment = var.platform_environment
+  app_environment      = var.app_environment
+  billing_scope        = var.billing_scope
+
+  virtual_networks = {
+    southeastasia = {
+      location = "southeastasia"
+      address_space = {
+        npd = ["10.212.2.0/28", "10.212.2.64/27"]
+        prd = ["10.212.2.48/28", "10.212.3.0/27"]
+      }
+
+      dns_servers = ["10.212.0.100"]
+    }
+  }
+
+  rbac = {
+    template_name = "standard"
+  }
+
+  directory_roles = [
+    "Directory Readers"
+  ]
+
+  devops_project_name = "Retail - Store Systems"
+  management_group    = "retail-internal"
+  subscription_name   = "storesystems"
+  subscription_tags = {
+    WorkloadName        = "Store Systems"
+    DataClassification  = "General"
+    BusinessCriticality = "Mission-critical"
+    BusinessUnit        = "Retail"
+    OperationsTeam      = "Retail"
+  }
+}

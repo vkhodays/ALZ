@@ -136,12 +136,12 @@ module "retail-storesystems" {
     time    = time
   }
 
-  primary_location = "eastus"
-
-  platform_environment = var.platform_environment
-  app_environment      = var.app_environment
-  billing_scope        = var.billing_scope
-  subscription_ids     = local.subscription_ids
+  primary_location      = "eastus"
+  statefile_pe_location = "southeastasia" # remove this when the eastus region is available
+  platform_environment  = var.platform_environment
+  app_environment       = var.app_environment
+  billing_scope         = var.billing_scope
+  subscription_ids      = local.subscription_ids
 
   virtual_networks = {
     storesystemssea = {

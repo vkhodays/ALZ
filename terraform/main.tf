@@ -167,7 +167,7 @@ module "retail-storesystems" {
 
   devops_project_name = "Retail - Store Systems"
   management_group    = "retail-internal"
-  subscription_name   = "retail-store-systems"
+  subscription_name   = "retail-storesystems"
   subscription_tags = {
     WorkloadName        = "Store Systems"
     DataClassification  = "General"

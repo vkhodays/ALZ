@@ -144,7 +144,7 @@ module "retail-storesystems" {
   subscription_ids     = local.subscription_ids
 
   virtual_networks = {
-    southeastasia = {
+    storesystemssea = {
       location = "southeastasia"
       address_space = {
         npd = ["10.212.2.48/28", "10.212.2.64/27"]

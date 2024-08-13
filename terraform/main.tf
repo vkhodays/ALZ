@@ -147,8 +147,8 @@ module "retail-storesystems" {
     southeastasia = {
       location = "southeastasia"
       address_space = {
-        npd = ["10.212.2.0/28", "10.212.2.64/27"]
-        prd = ["10.212.2.48/28", "10.212.3.0/27"]
+        npd = ["10.212.2.48/28", "10.212.2.64/27"]
+        prd = ["10.212.3.0/28", "10.212.3.32/27"]
       }
 
       dns_servers = ["10.212.0.100"]
@@ -167,7 +167,7 @@ module "retail-storesystems" {
 
   devops_project_name = "Retail - Store Systems"
   management_group    = "retail-internal"
-  subscription_name   = "retail-storesystems"
+  subscription_name   = "retail-store-systems"
   subscription_tags = {
     WorkloadName        = "Store Systems"
     DataClassification  = "General"

@@ -6,7 +6,12 @@ locals {
   }
 }
 
+moved {
+  from = module.global-logitics-analytics
+  to   = module.global-logitics-analytics[0]
+}
 module "global-logitics-analytics" {
+  count = var.app_environment == "npd" ? 1 : 0 # only deploy to npd while in singapore.  remove this when changing to eastus
   # tflint-ignore: terraform_module_pinned_source
   source = "git::https://dev.azure.com/RalphLauren/Azure%20Landing%20Zones/_git/Terraform.DataLandingZone?ref=main"
 
@@ -136,7 +141,7 @@ module "retail-storesystems" {
     time    = time
   }
 
-  primary_location = "eastus"
+  primary_location      = "eastus"
   statefile_pe_location = "southeastasia" # remove this when the eastus region is available
 
   platform_environment = var.platform_environment

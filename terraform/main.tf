@@ -147,7 +147,7 @@ module "retail-storesystems" {
     storesystemssea = {
       location = "southeastasia"
       address_space = {
-        npd = ["10.212.2.48/28", "10.212.2.64/27"]
+        npd = ["10.212.2.48/28", "10.212.2.64/27", "10.212.2.96/27", "10.212.2.128/25"]
         prd = ["10.212.3.0/28", "10.212.3.32/27"]
       }
 

@@ -137,6 +137,7 @@ module "retail-storesystems" {
   }
 
   primary_location = "eastus"
+  statefile_pe_location = "southeastasia" # remove this when the eastus region is available
 
   platform_environment = var.platform_environment
   app_environment      = var.app_environment
@@ -147,7 +148,7 @@ module "retail-storesystems" {
     storesystemssea = {
       location = "southeastasia"
       address_space = {
-        npd = ["10.212.2.48/28", "10.212.2.64/27"]
+        npd = ["10.212.2.48/28", "10.212.2.64/27", "10.212.2.96/27", "10.212.2.128/25"]
         prd = ["10.212.3.0/28", "10.212.3.32/27"]
       }
 

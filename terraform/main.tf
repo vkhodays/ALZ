@@ -132,7 +132,7 @@ module "global-logitics-analytics" {
 
 moved {
   from = module.retail-storesystems
-  to   = module.retail-storesystems.landingzone
+  to   = module.retail-storesystems.module.landingzone
 }
 module "retail-storesystems" {
   # tflint-ignore: terraform_module_pinned_source

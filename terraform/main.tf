@@ -186,6 +186,7 @@ module "global-retail-storesystems" {
     OperationsTeam      = "Retail"
   }
 
+  resource_group_creation_enabled = true
   resource_groups = {
     npd = {
       xcenter23-dev = {

@@ -185,4 +185,39 @@ module "global-retail-storesystems" {
     BusinessUnit        = "Retail"
     OperationsTeam      = "Retail"
   }
+
+  resource_groups = {
+    npd = {
+      xcenter23-dev = {
+        name     = "rg-xcenter23-dev-southeastasia"
+        location = "southeastasia"
+        tags = {
+          Environment = "Development"
+        }
+      },
+      xcenter23-qa = {
+        name     = "rg-xcenter23-qa-southeastasia"
+        location = "southeastasia"
+        tags = {
+          Environment = "QA"
+        }
+      },
+      xcenter7-qa = {
+        name     = "rg-xcenter7-qa-southeastasia"
+        location = "southeastasia"
+        tags = {
+          Environment = "QA"
+        }
+      }
+    }
+    prd = {
+      xcenter23-prd = {
+        name     = "rg-xcenter23-prd-southeastasia"
+        location = "southeastasia"
+        tags = {
+          Environment = "Production"
+        }
+      }
+    }
+  }
 }

@@ -132,9 +132,9 @@ module "global-logitics-analytics" {
 
 moved {
   from = module.retail-storesystems
-  to   = module.retail-storesystems.module.landingzone
+  to   = module.global-retail-storesystems.module.landingzone
 }
-module "retail-storesystems" {
+module "global-retail-storesystems" {
   # tflint-ignore: terraform_module_pinned_source
   source = "git::https://dev.azure.com/RalphLauren/Azure%20Landing%20Zones/_git/Terraform.IaaSLandingZone?ref=feature/rbac-uplift"
 

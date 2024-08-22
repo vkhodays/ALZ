@@ -182,11 +182,11 @@ module "retail-storesystems" {
     OperationsTeam      = "Retail"
   }
 
-  role_assignments = {
+  role_assignments = var.app_environment == "npd" ? {
     migration_glob_plat_engineers = {
       principal_id   = "d102378d-d7d8-41b1-9762-86aac1d693a5" # alz-global-platform_engineers
       definition     = "User Access Administrator"
       relative_scope = "/resourceGroups/rg-xcenter7-qa-southeastasia"
     }
-  }
+  } : {}
 }

@@ -188,5 +188,10 @@ module "retail-storesystems" {
       definition     = "User Access Administrator"
       relative_scope = "/resourceGroups/rg-xcenter7-qa-southeastasia"
     }
+    migration_glob_plat_engineers_migrate = {
+      principal_id   = "d102378d-d7d8-41b1-9762-86aac1d693a5" # alz-global-platform_engineers
+      definition     = "User Access Administrator"
+      relative_scope = "/resourceGroups/rg-migrate-southeastasia"
+    }
   } : {}
 }

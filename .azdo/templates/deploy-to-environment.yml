@@ -3,6 +3,7 @@ parameters:
   appEnvironment: ''
   dependsOn:
   - RunChecks
+  usesRepositories: []
   pool:
     name: 'Linux.AzureDevops.Ubuntu.2204.Prod'
 
@@ -16,7 +17,6 @@ stages:
     dependsOn: ${{ parameters.dependsOn }}
     variables:
     - group: 'ALZ.Bootstrap.ResourceNames.${{ parameters.platformEnvironment }}'
-    - group: 'ADO.PATs'
     terraformWorkingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
     terraformServiceConnectionName: 'alz-management.id-alz-vendor.${{ parameters.platformEnvironment }}'
     terraformSubscriptionId: $(subscription-management)
@@ -24,4 +24,5 @@ stages:
     terraformBackendSubscriptionId: $(subscription-management)
     terraformBackendStorageAccountName: $(id-alz-vendor)
     terraformBackendFilename: 'vendor-apps-${{ parameters.platformEnvironment }}-${{ parameters.appEnvironment }}.tfstate'
-    terraformCommandOptions: '-var core_storage_account_name=$(id-alz-core) -var platform_environment=${{ parameters.platformEnvironment }} -var app_environment=${{ parameters.appEnvironment }} -var devops_pat=$(PAT_VARIABLE_GROUPS)'
+    terraformCommandOptions: '-var core_storage_account_name=$(id-alz-core) -var platform_environment=${{ parameters.platformEnvironment }} -var app_environment=${{ parameters.appEnvironment }} -var devops_pat=$(System.AccessToken)'
+    usesRepositories: ${{ parameters.usesRepositories }}

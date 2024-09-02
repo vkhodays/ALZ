@@ -17,6 +17,15 @@ resources:
   - repository: Terraform.RBAC
     type: git
     name: 'Azure Landing Zones/Terraform.RBAC'
+  - repository: Terraform.ServiceConnections
+    type: git
+    name: 'Azure Landing Zones/Terraform.ServiceConnections'
+  - repository: Terraform.AppRegistration
+    type: git
+    name: 'Azure Landing Zones/Terraform.AppRegistration'
+  - repository: Terraform.DataLandingZone
+    type: git
+    name: 'Azure Landing Zones/Terraform.DataLandingZone'
 
 parameters:
 - name: useMicrosoftAgents
@@ -24,13 +33,16 @@ parameters:
   type: boolean
   default: false
 
-variables:
-- group: ADO.PATs
-
 stages:
 ### RUN CHECKS ###
 - template: terraform/stages/terraform-checks.yaml@ADO.Templates
   parameters:
+    usesRepositories: 
+    - Terraform.LandingZones
+    - Terraform.RBAC
+    - Terraform.ServiceConnections
+    - Terraform.AppRegistration
+    - Terraform.DataLandingZone
     pool:
       ${{ if eq(parameters.useMicrosoftAgents, true) }}:
         vmImage: 'ubuntu-latest' 
@@ -42,6 +54,12 @@ stages:
   parameters:
     platformEnvironment: 'Prod'
     appEnvironment: 'npd'
+    usesRepositories: 
+    - Terraform.LandingZones
+    - Terraform.RBAC
+    - Terraform.ServiceConnections
+    - Terraform.AppRegistration
+    - Terraform.DataLandingZone
     dependsOn: RunChecks
     pool:
       ${{ if eq(parameters.useMicrosoftAgents, true) }}:
@@ -54,6 +72,12 @@ stages:
   parameters:
     platformEnvironment: 'Prod'
     appEnvironment: 'prd'
+    usesRepositories: 
+    - Terraform.LandingZones
+    - Terraform.RBAC
+    - Terraform.ServiceConnections
+    - Terraform.AppRegistration
+    - Terraform.DataLandingZone
     dependsOn: RunChecks
     pool:
       ${{ if eq(parameters.useMicrosoftAgents, true) }}:

@@ -10,7 +10,7 @@ resources:
   - repository: ADO.Templates
     type: git
     name: 'Azure Landing Zones/ADO.Templates'
-    ref: 'feature/timeout-fix'
+    ref: 'refs/heads/main'
   - repository: Terraform.LandingZones
     type: git
     name: 'Azure Landing Zones/Terraform.LandingZones'

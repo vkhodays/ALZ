@@ -10,13 +10,19 @@ resources:
   - repository: ADO.Templates
     type: git
     name: 'Azure Landing Zones/ADO.Templates'
-    ref: 'refs/heads/main'
+    ref: 'feature/timeout-fix'
   - repository: Terraform.LandingZones
     type: git
     name: 'Azure Landing Zones/Terraform.LandingZones'
   - repository: Terraform.RBAC
     type: git
     name: 'Azure Landing Zones/Terraform.RBAC'
+  - repository: Terraform.ServiceConnections
+    type: git
+    name: 'Azure Landing Zones/Terraform.ServiceConnections'
+  - repository: Terraform.AppRegistration
+    type: git
+    name: 'Azure Landing Zones/Terraform.AppRegistration'
 
 parameters:
 - name: useMicrosoftAgents
@@ -24,13 +30,15 @@ parameters:
   type: boolean
   default: false
 
-variables:
-- group: ADO.PATs
-
 stages:
 ### RUN CHECKS ###
 - template: terraform/stages/terraform-checks.yaml@ADO.Templates
   parameters:
+    usesRepositories: 
+    - Terraform.LandingZones
+    - Terraform.RBAC
+    - Terraform.ServiceConnections
+    - Terraform.AppRegistration
     pool:
       ${{ if eq(parameters.useMicrosoftAgents, true) }}:
         vmImage: 'ubuntu-latest' 
@@ -42,6 +50,11 @@ stages:
   parameters:
     platformEnvironment: 'Prod'
     appEnvironment: 'npd'
+    usesRepositories: 
+    - Terraform.LandingZones
+    - Terraform.RBAC
+    - Terraform.ServiceConnections
+    - Terraform.AppRegistration
     dependsOn: RunChecks
     pool:
       ${{ if eq(parameters.useMicrosoftAgents, true) }}:
@@ -54,6 +67,11 @@ stages:
   parameters:
     platformEnvironment: 'Prod'
     appEnvironment: 'prd'
+    usesRepositories: 
+    - Terraform.LandingZones
+    - Terraform.RBAC
+    - Terraform.ServiceConnections
+    - Terraform.AppRegistration
     dependsOn: RunChecks
     pool:
       ${{ if eq(parameters.useMicrosoftAgents, true) }}:

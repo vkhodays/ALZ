@@ -132,7 +132,7 @@ module "global-logitics-analytics" {
 
 module "retail-storesystems" {
   # tflint-ignore: terraform_module_pinned_source
-  source = "git::https://dev.azure.com/RalphLauren/Azure%20Landing%20Zones/_git/Terraform.LandingZones?ref=20240821.2"
+  source = "git::https://dev.azure.com/RalphLauren/Azure%20Landing%20Zones/_git/Terraform.LandingZones?ref=20240917.4"
 
   providers = {
     azurerm = azurerm
@@ -150,11 +150,11 @@ module "retail-storesystems" {
   subscription_ids     = local.subscription_ids
 
   virtual_networks = {
-    storesystemssea = {
+    retail_southeastasia = {
       location = "southeastasia"
       address_space = {
-        npd = ["10.212.2.48/28", "10.212.2.64/27", "10.212.2.96/27", "10.212.2.128/25"]
-        prd = ["10.212.3.0/28", "10.212.3.32/27"]
+        npd = ["10.212.16.0/21"]
+        prd = ["10.212.8.0/21"]
       }
 
       dns_servers = ["10.212.0.100"]
@@ -189,4 +189,95 @@ module "retail-storesystems" {
       relative_scope = "/resourceGroups/rg-xcenter7-qa-southeastasia"
     }
   } : {}
+}
+
+moved {
+  from = module.retail-storesystems.module.subscription.module.virtualnetwork[0].azapi_resource.rg["vnet-storesystemssea"]
+  to = module.retail-storesystems.module.subscription.module.virtualnetwork_0.azapi_resource.rg_vnet-storesystemssea
+}
+
+removed {
+  from = module.retail-storesystems.module.subscription.module.virtualnetwork_0.azapi_resource.rg_vnet-storesystemssea
+
+  lifecycle {
+    destroy = false
+  }
+}
+
+moved {
+  from = module.retail-storesystems.module.subscription.module.virtualnetwork[0].azapi_resource.rg_lock["vnet-storesystemssea"]
+  to = module.retail-storesystems.module.subscription.module.virtualnetwork_0.azapi_resource.rg_lock_vnet-storesystemssea
+}
+
+removed {
+  from = module.retail-storesystems.module.subscription.module.virtualnetwork_0.azapi_resource.rg_lock_vnet-storesystemssea
+
+  lifecycle {
+    destroy = false
+  }
+}
+
+moved {
+  from = module.retail-storesystems.module.subscription.module.virtualnetwork[0].azapi_update_resource.vnet["storesystemssea"]
+  to = module.retail-storesystems.module.subscription.module.virtualnetwork_0.azapi_update_resource.vnet_storesystemssea
+}
+
+removed {
+  from = module.retail-storesystems.module.subscription.module.virtualnetwork_0.azapi_update_resource.vnet_storesystemssea
+
+  lifecycle {
+    destroy = false
+  }
+}
+
+moved {
+  from = module.retail-storesystems.module.subscription.module.virtualnetwork[0].azapi_update_resource.vnet["storesystemssea"]
+  to = module.retail-storesystems.module.subscription.module.virtualnetwork_0.azapi_update_resource.vnet_storesystemssea
+}
+
+removed {
+  from = module.retail-storesystems.module.subscription.module.virtualnetwork_0.azapi_update_resource.vnet_storesystemssea
+
+  lifecycle {
+    destroy = false
+  }
+}
+
+moved {
+  from = module.retail-storesystems.module.private_endpoint_subnets["storesystemssea"].azapi_resource.nsg
+  to = module.retail-storesystems.module.private_endpoint_subnets_storesystemssea.azapi_resource.nsg
+}
+
+removed {
+  from = module.retail-storesystems.module.private_endpoint_subnets_storesystemssea.azapi_resource.nsg
+
+  lifecycle {
+    destroy = false
+  }
+}
+
+moved {
+  from = module.retail-storesystems.module.private_endpoint_subnets["storesystemssea"].azapi_resource.subnet
+  to = module.retail-storesystems.module.private_endpoint_subnets_storesystemssea.azapi_resource.subnet
+}
+
+removed {
+  from = module.retail-storesystems.module.private_endpoint_subnets_storesystemssea.azapi_resource.subnet
+
+  lifecycle {
+    destroy = false
+  }
+}
+
+moved {
+  from = module.retail-storesystems.module.subscription.module.virtualnetwork[0].azapi_resource.vnet["storesystemssea"]
+  to = module.retail-storesystems.module.subscription.module.virtualnetwork_0.azapi_resource.vnet_storesystemssea
+}
+
+removed {
+  from = module.retail-storesystems.module.subscription.module.virtualnetwork_0.azapi_resource.vnet_storesystemssea
+
+  lifecycle {
+    destroy = false
+  }
 }

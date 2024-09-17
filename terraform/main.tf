@@ -154,7 +154,7 @@ module "retail-storesystems" {
       location = "southeastasia"
       address_space = {
         npd = ["10.212.16.0/21"]
-        prd = ["10.212.8.0/21"]
+        prd = ["10.212.24.0/21"]
       }
 
       dns_servers = ["10.212.0.100"]

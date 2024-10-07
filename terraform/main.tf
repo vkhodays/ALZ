@@ -193,7 +193,7 @@ module "retail-storesystems" {
 
 moved {
   from = module.retail-storesystems.module.subscription.module.virtualnetwork[0].azapi_resource.rg["vnet-storesystemssea"]
-  to = module.retail-storesystems.module.subscription.module.virtualnetwork_0.azapi_resource.rg_vnet-storesystemssea
+  to   = module.retail-storesystems.module.subscription.module.virtualnetwork_0.azapi_resource.rg_vnet-storesystemssea
 }
 
 removed {
@@ -206,7 +206,7 @@ removed {
 
 moved {
   from = module.retail-storesystems.module.subscription.module.virtualnetwork[0].azapi_resource.rg_lock["vnet-storesystemssea"]
-  to = module.retail-storesystems.module.subscription.module.virtualnetwork_0.azapi_resource.rg_lock_vnet-storesystemssea
+  to   = module.retail-storesystems.module.subscription.module.virtualnetwork_0.azapi_resource.rg_lock_vnet-storesystemssea
 }
 
 removed {
@@ -219,7 +219,7 @@ removed {
 
 moved {
   from = module.retail-storesystems.module.subscription.module.virtualnetwork[0].azapi_update_resource.vnet["storesystemssea"]
-  to = module.retail-storesystems.module.subscription.module.virtualnetwork_0.azapi_update_resource.vnet_storesystemssea
+  to   = module.retail-storesystems.module.subscription.module.virtualnetwork_0.azapi_update_resource.vnet_storesystemssea
 }
 
 removed {
@@ -232,7 +232,7 @@ removed {
 
 moved {
   from = module.retail-storesystems.module.subscription.module.virtualnetwork[0].azapi_update_resource.vnet["storesystemssea"]
-  to = module.retail-storesystems.module.subscription.module.virtualnetwork_0.azapi_update_resource.vnet_storesystemssea
+  to   = module.retail-storesystems.module.subscription.module.virtualnetwork_0.azapi_update_resource.vnet_storesystemssea
 }
 
 removed {
@@ -245,7 +245,7 @@ removed {
 
 moved {
   from = module.retail-storesystems.module.private_endpoint_subnets["storesystemssea"].azapi_resource.nsg
-  to = module.retail-storesystems.module.private_endpoint_subnets_storesystemssea.azapi_resource.nsg
+  to   = module.retail-storesystems.module.private_endpoint_subnets_storesystemssea.azapi_resource.nsg
 }
 
 removed {
@@ -258,7 +258,7 @@ removed {
 
 moved {
   from = module.retail-storesystems.module.private_endpoint_subnets["storesystemssea"].azapi_resource.subnet
-  to = module.retail-storesystems.module.private_endpoint_subnets_storesystemssea.azapi_resource.subnet
+  to   = module.retail-storesystems.module.private_endpoint_subnets_storesystemssea.azapi_resource.subnet
 }
 
 removed {
@@ -271,7 +271,7 @@ removed {
 
 moved {
   from = module.retail-storesystems.module.subscription.module.virtualnetwork[0].azapi_resource.vnet["storesystemssea"]
-  to = module.retail-storesystems.module.subscription.module.virtualnetwork_0.azapi_resource.vnet_storesystemssea
+  to   = module.retail-storesystems.module.subscription.module.virtualnetwork_0.azapi_resource.vnet_storesystemssea
 }
 
 removed {
@@ -279,5 +279,58 @@ removed {
 
   lifecycle {
     destroy = false
+  }
+}
+
+module "retail-jpluxtrunkshow" {
+  # tflint-ignore: terraform_module_pinned_source
+  source = "git::https://dev.azure.com/RalphLauren/Azure%20Landing%20Zones/_git/Terraform.LandingZones?ref=20240917.4"
+
+  providers = {
+    azurerm = azurerm
+    azuread = azuread
+    azapi   = azapi
+    time    = time
+  }
+
+  primary_location      = "eastus"
+  statefile_pe_location = "southeastasia" # remove this when the eastus region is available
+
+  platform_environment = var.platform_environment
+  app_environment      = var.app_environment
+  billing_scope        = var.billing_scope
+  subscription_ids     = local.subscription_ids
+
+  virtual_networks = {
+    retail_southeastasia = {
+      location = "southeastasia"
+      address_space = {
+        npd = ["10.212.16.15/28"]
+        prd = ["10.212.8.15/28"]
+      }
+
+      dns_servers = ["10.212.0.100"]
+    }
+  }
+
+  rbac = {
+    template_name          = "standard"
+    create_groups          = var.app_environment == "npd"
+    pim_enabled_if_defined = var.pim_enabled
+  }
+
+  directory_roles = [
+    "Directory Readers"
+  ]
+
+  terraform_integration_enabled = false
+  management_group              = "retail-internal"
+  subscription_name             = "retail-jpluxtrunkshow"
+  subscription_tags = {
+    WorkloadName        = "JP Lux Trunk Show"
+    DataClassification  = "General"
+    BusinessCriticality = "High"
+    BusinessUnit        = "Retail"
+    OperationsTeam      = "Retail"
   }
 }

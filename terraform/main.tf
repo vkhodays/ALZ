@@ -23,7 +23,6 @@ module "global-logitics-analytics" {
   platform_environment  = var.platform_environment
   app_environment       = var.app_environment
   primary_location      = "eastus"
-  statefile_pe_location = "southeastasia" # remove this when the eastus region is available
   billing_scope         = var.billing_scope
   subscription_ids      = local.subscription_ids
 

@@ -7,11 +7,10 @@ locals {
 }
 
 moved {
-  from = module.global-logitics-analytics
-  to   = module.global-logitics-analytics[0]
+  from = module.global-logitics-analytics[0]
+  to   = module.global-logitics-analytics
 }
 module "global-logitics-analytics" {
-  count  = var.app_environment == "npd" ? 1 : 0 # only deploy to npd while in singapore.  remove this when changing to eastus
   source = "git::https://dev.azure.com/RalphLauren/Azure%20Landing%20Zones/_git/Terraform.DataLandingZone?ref=20241008.2"
 
   providers = {

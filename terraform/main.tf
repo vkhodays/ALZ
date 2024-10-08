@@ -7,13 +7,11 @@ locals {
 }
 
 moved {
-  from = module.global-logitics-analytics
-  to   = module.global-logitics-analytics[0]
+  from = module.global-logitics-analytics[0]
+  to   = module.global-logitics-analytics
 }
 module "global-logitics-analytics" {
-  count = var.app_environment == "npd" ? 1 : 0 # only deploy to npd while in singapore.  remove this when changing to eastus
-  # tflint-ignore: terraform_module_pinned_source
-  source = "git::https://dev.azure.com/RalphLauren/Azure%20Landing%20Zones/_git/Terraform.DataLandingZone?ref=main"
+  source = "git::https://dev.azure.com/RalphLauren/Azure%20Landing%20Zones/_git/Terraform.DataLandingZone?ref=20241008.2"
 
   providers = {
     azurerm = azurerm
@@ -30,13 +28,13 @@ module "global-logitics-analytics" {
   subscription_ids      = local.subscription_ids
 
   virtual_networks = {
-    globlogsea = {
-      location = "southeastasia" # To be changed to eastus when the region is available
+    globlogeus = {
+      location = "eastus"
       address_space = {
-        npd = ["10.212.2.16/28", "10.212.8.0/22"]
-        prd = ["10.212.2.32/28", "10.212.12.0/22"]
+        npd = ["10.232.240.0/21", "10.232.100.0/23"]
+        prd = ["10.232.88.0/24", "10.232.220.0/22"]
       }
-      dns_servers = ["10.212.0.100"]
+      dns_servers = ["10.232.0.196"]
     }
   }
 
@@ -65,40 +63,40 @@ module "global-logitics-analytics" {
   analytics_environments = {
     npd = {
       dev = {
-        location = "southeastasia" # To be changed to eastus when the region is available
+        location = "eastus"
 
         runtime_configuration = {
           enabled     = true
-          subnet_cidr = "10.212.8.0/26"
+          subnet_cidr = "10.232.241.0/26"
         }
 
-        vnet_key                                        = "globlogsea"
-        storage_subnet_cidr                             = "10.212.8.64/27"
-        external_subnet_cidr                            = "10.212.8.96/27"
-        metadata_ingestion_subnet_cidr                  = "10.212.8.128/27"
-        shared_analytics_subnet_cidr                    = "10.212.8.160/27"
-        shared_analytics_databricks_private_subnet_cidr = "10.212.9.0/25"
-        shared_analytics_databricks_public_subnet_cidr  = "10.212.9.128/25"
+        vnet_key                                        = "globlogeus"
+        storage_subnet_cidr                             = "10.232.240.128/27"
+        external_subnet_cidr                            = "10.232.240.160/27"
+        metadata_ingestion_subnet_cidr                  = "10.232.240.192/27"
+        shared_analytics_subnet_cidr                    = "10.232.240.224/27"
+        shared_analytics_databricks_private_subnet_cidr = "10.232.242.0/23"
+        shared_analytics_databricks_public_subnet_cidr  = "10.232.244.0/23"
         db_administrator_entra_group_name               = "alz-global-platform_engineers"
         tags = {
           Environment = "Development"
         }
       }
       qa = {
-        location = "southeastasia" # To be changed to eastus when the region is available
+        location = "eastus"
 
         runtime_configuration = {
           enabled     = true
-          subnet_cidr = "10.212.10.0/26"
+          subnet_cidr = "10.232.241.64/26"
         }
 
-        vnet_key                                        = "globlogsea"
-        storage_subnet_cidr                             = "10.212.10.64/27"
-        external_subnet_cidr                            = "10.212.10.96/27"
-        metadata_ingestion_subnet_cidr                  = "10.212.10.128/27"
-        shared_analytics_subnet_cidr                    = "10.212.10.160/27"
-        shared_analytics_databricks_private_subnet_cidr = "10.212.11.0/25"
-        shared_analytics_databricks_public_subnet_cidr  = "10.212.11.128/25"
+        vnet_key                                        = "globlogeus"
+        storage_subnet_cidr                             = "10.232.241.128/27"
+        external_subnet_cidr                            = "10.232.241.160/27"
+        metadata_ingestion_subnet_cidr                  = "10.232.241.192/27"
+        shared_analytics_subnet_cidr                    = "10.232.241.224/27"
+        shared_analytics_databricks_private_subnet_cidr = "10.232.246.0/23"
+        shared_analytics_databricks_public_subnet_cidr  = "10.232.100.0/23"
         db_administrator_entra_group_name               = "alz-global-platform_engineers"
         tags = {
           Environment = "QA"
@@ -107,20 +105,20 @@ module "global-logitics-analytics" {
     }
     prd = {
       prd = {
-        location = "southeastasia" # To be changed to eastus when the region is available
+        location = "eastus"
 
         runtime_configuration = {
           enabled     = true
-          subnet_cidr = "10.212.12.0/26"
+          subnet_cidr = "10.232.88.64/26"
         }
 
-        vnet_key                                        = "globlogsea"
-        storage_subnet_cidr                             = "10.212.12.64/27"
-        external_subnet_cidr                            = "10.212.12.96/27"
-        metadata_ingestion_subnet_cidr                  = "10.212.12.128/27"
-        shared_analytics_subnet_cidr                    = "10.212.12.160/27"
-        shared_analytics_databricks_private_subnet_cidr = "10.212.13.0/24"
-        shared_analytics_databricks_public_subnet_cidr  = "10.212.14.0/24"
+        vnet_key                                        = "globlogeus"
+        storage_subnet_cidr                             = "10.232.88.128/27"
+        external_subnet_cidr                            = "10.232.88.160/27"
+        metadata_ingestion_subnet_cidr                  = "10.232.88.192/27"
+        shared_analytics_subnet_cidr                    = "10.232.88.224/27"
+        shared_analytics_databricks_private_subnet_cidr = "10.232.220.0/23"
+        shared_analytics_databricks_public_subnet_cidr  = "10.232.222.0/23"
         db_administrator_entra_group_name               = "alz-global-platform_engineers"
         tags = {
           Environment = "Production"
@@ -193,7 +191,7 @@ module "retail-storesystems" {
 
 moved {
   from = module.retail-storesystems.module.subscription.module.virtualnetwork[0].azapi_resource.rg["vnet-storesystemssea"]
-  to = module.retail-storesystems.module.subscription.module.virtualnetwork_0.azapi_resource.rg_vnet-storesystemssea
+  to   = module.retail-storesystems.module.subscription.module.virtualnetwork_0.azapi_resource.rg_vnet-storesystemssea
 }
 
 removed {
@@ -206,7 +204,7 @@ removed {
 
 moved {
   from = module.retail-storesystems.module.subscription.module.virtualnetwork[0].azapi_resource.rg_lock["vnet-storesystemssea"]
-  to = module.retail-storesystems.module.subscription.module.virtualnetwork_0.azapi_resource.rg_lock_vnet-storesystemssea
+  to   = module.retail-storesystems.module.subscription.module.virtualnetwork_0.azapi_resource.rg_lock_vnet-storesystemssea
 }
 
 removed {
@@ -219,7 +217,7 @@ removed {
 
 moved {
   from = module.retail-storesystems.module.subscription.module.virtualnetwork[0].azapi_update_resource.vnet["storesystemssea"]
-  to = module.retail-storesystems.module.subscription.module.virtualnetwork_0.azapi_update_resource.vnet_storesystemssea
+  to   = module.retail-storesystems.module.subscription.module.virtualnetwork_0.azapi_update_resource.vnet_storesystemssea
 }
 
 removed {
@@ -232,7 +230,7 @@ removed {
 
 moved {
   from = module.retail-storesystems.module.subscription.module.virtualnetwork[0].azapi_update_resource.vnet["storesystemssea"]
-  to = module.retail-storesystems.module.subscription.module.virtualnetwork_0.azapi_update_resource.vnet_storesystemssea
+  to   = module.retail-storesystems.module.subscription.module.virtualnetwork_0.azapi_update_resource.vnet_storesystemssea
 }
 
 removed {
@@ -245,7 +243,7 @@ removed {
 
 moved {
   from = module.retail-storesystems.module.private_endpoint_subnets["storesystemssea"].azapi_resource.nsg
-  to = module.retail-storesystems.module.private_endpoint_subnets_storesystemssea.azapi_resource.nsg
+  to   = module.retail-storesystems.module.private_endpoint_subnets_storesystemssea.azapi_resource.nsg
 }
 
 removed {
@@ -258,7 +256,7 @@ removed {
 
 moved {
   from = module.retail-storesystems.module.private_endpoint_subnets["storesystemssea"].azapi_resource.subnet
-  to = module.retail-storesystems.module.private_endpoint_subnets_storesystemssea.azapi_resource.subnet
+  to   = module.retail-storesystems.module.private_endpoint_subnets_storesystemssea.azapi_resource.subnet
 }
 
 removed {
@@ -271,7 +269,7 @@ removed {
 
 moved {
   from = module.retail-storesystems.module.subscription.module.virtualnetwork[0].azapi_resource.vnet["storesystemssea"]
-  to = module.retail-storesystems.module.subscription.module.virtualnetwork_0.azapi_resource.vnet_storesystemssea
+  to   = module.retail-storesystems.module.subscription.module.virtualnetwork_0.azapi_resource.vnet_storesystemssea
 }
 
 removed {

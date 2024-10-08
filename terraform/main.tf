@@ -305,8 +305,8 @@ module "retail-jpluxtrunkshow" {
     retail_southeastasia = {
       location = "southeastasia"
       address_space = {
-        npd = ["10.212.16.15/28"]
-        prd = ["10.212.8.15/28"]
+        npd = ["10.212.16.15/27"]
+        prd = ["10.212.8.15/27"]
       }
 
       dns_servers = ["10.212.0.100"]

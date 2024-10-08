@@ -32,7 +32,7 @@ module "global-logitics-analytics" {
       location = "eastus"
       address_space = {
         npd = ["10.232.240.0/21", "10.232.100.0/23"]
-        prd = ["10.232.88.0/24", "10.232.220/22"]
+        prd = ["10.232.88.0/24", "10.232.220.0/22"]
       }
       dns_servers = ["10.232.0.196"]
     }

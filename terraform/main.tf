@@ -153,8 +153,8 @@ module "retail-storesystems" {
     retail_southeastasia = {
       location = "southeastasia"
       address_space = {
-        npd = ["10.212.16.0/21"]
-        prd = ["10.212.24.0/21"]
+        npd = ["10.212.8.0/24"]
+        prd = ["10.212.16.0/24"]
       }
 
       dns_servers = ["10.212.0.100"]
@@ -305,8 +305,8 @@ module "retail-jpluxtrunkshow" {
     retail_southeastasia = {
       location = "southeastasia"
       address_space = {
-        npd = ["10.212.16.15/27"]
-        prd = ["10.212.8.15/27"]
+        npd = ["10.212.14.0/27"]
+        prd = ["10.212.22.0/27"]
       }
 
       dns_servers = ["10.212.0.100"]

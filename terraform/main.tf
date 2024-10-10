@@ -11,7 +11,7 @@ moved {
   to   = module.global-logitics-analytics
 }
 module "global-logitics-analytics" {
-  source = "git::https://dev.azure.com/RalphLauren/Azure%20Landing%20Zones/_git/Terraform.DataLandingZone?ref=20241009.2"
+  source = "git::https://dev.azure.com/RalphLauren/Azure%20Landing%20Zones/_git/Terraform.DataLandingZone?ref=20241010.5"
 
   providers = {
     azurerm = azurerm
@@ -50,6 +50,7 @@ module "global-logitics-analytics" {
   devops_project_name = "Logistics Analytics Data Platform"
   management_group    = "corp-internal"
   subscription_name   = "logistics-analytics"
+  short_name          = "ladp"
   subscription_tags = {
     WorkloadName        = "Global Logistics Analytics"
     DataClassification  = "Confidential"
@@ -129,7 +130,7 @@ module "global-logitics-analytics" {
 
 module "retail-storesystems" {
   # tflint-ignore: terraform_module_pinned_source
-  source = "git::https://dev.azure.com/RalphLauren/Azure%20Landing%20Zones/_git/Terraform.LandingZones?ref=20241008.2"
+  source = "git::https://dev.azure.com/RalphLauren/Azure%20Landing%20Zones/_git/Terraform.LandingZones?ref=20241010.3"
 
   providers = {
     azurerm = azurerm

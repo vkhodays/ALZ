@@ -16,19 +16,6 @@ variable "devops_pat" {
   default     = null
 }
 
-variable "github_token" {
-  type        = string
-  description = "A GitHub OAuth / Personal Access Token"
-  sensitive   = true
-  default     = null
-}
-
-variable "github_owner" {
-  type        = string
-  description = "The GitHub organization"
-  default     = "##GITHUB_ORGANSATION_NAME##"
-}
-
 variable "platform_environment" {
   type        = string
   description = "The platform environment (tenant)"

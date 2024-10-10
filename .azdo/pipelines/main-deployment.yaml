@@ -1,9 +1,4 @@
-trigger:
-  branches:
-    include:
-    - main
-    - feature/*
-    - release/*
+trigger: none
 
 resources:
   repositories:

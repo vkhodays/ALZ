@@ -11,7 +11,7 @@ moved {
   to   = module.global-logitics-analytics
 }
 module "global-logitics-analytics" {
-  source = "git::https://dev.azure.com/RalphLauren/Azure%20Landing%20Zones/_git/Terraform.DataLandingZone?ref=20241009.2"
+  source = "git::https://dev.azure.com/RalphLauren/Azure%20Landing%20Zones/_git/Terraform.DataLandingZone?ref=feature/naming-fixup"
 
   providers = {
     azurerm = azurerm
@@ -50,6 +50,7 @@ module "global-logitics-analytics" {
   devops_project_name = "Logistics Analytics Data Platform"
   management_group    = "corp-internal"
   subscription_name   = "logistics-analytics"
+  short_name          = "ladp"
   subscription_tags = {
     WorkloadName        = "Global Logistics Analytics"
     DataClassification  = "Confidential"

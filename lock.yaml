@@ -16,3 +16,10 @@ steps:
     scriptLocation: 'inlineScript'
     inlineScript: 'az account set -s logistics-analytics-npd; az lock delete --name lock-rg-vnet-logistics-analytics-npd-eastus
   --resource-group rg-vnet-logistics-analytics-npd-eastus'
+- task: AzureCLI@2
+  inputs:
+    azureSubscription: 'alz-management.id-alz-vendor.Prod'
+    scriptType: 'bash'
+    scriptLocation: 'inlineScript'
+    inlineScript: 'az account set -s logistics-analytics-prd; az lock delete --name lock-rg-vnet-logistics-analytics-prd-eastus
+  --resource-group rg-vnet-logistics-analytics-prd-eastus'

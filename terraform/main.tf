@@ -130,7 +130,7 @@ module "global-logitics-analytics" {
 
 module "retail-storesystems" {
   # tflint-ignore: terraform_module_pinned_source
-  source = "git::https://dev.azure.com/RalphLauren/Azure%20Landing%20Zones/_git/Terraform.LandingZones?ref=20241010.3"
+  source = "git::https://dev.azure.com/RalphLauren/Azure%20Landing%20Zones/_git/Terraform.LandingZones?ref=feature/backup"
 
   providers = {
     azurerm = azurerm
@@ -180,13 +180,9 @@ module "retail-storesystems" {
     OperationsTeam      = "Retail"
   }
 
-  role_assignments = var.app_environment == "npd" ? {
-    migration_glob_plat_engineers = {
-      principal_id   = "d102378d-d7d8-41b1-9762-86aac1d693a5" # alz-global-platform_engineers
-      definition     = "User Access Administrator"
-      relative_scope = "/resourceGroups/rg-xcenter7-qa-southeastasia"
-    }
-  } : {}
+  recovery_services_vault_enabled = true
+  recovery_services_vault_use_private_endpoint = true
+  recovery_services_vault_enable_public_network_access = true
 }
 
 moved {

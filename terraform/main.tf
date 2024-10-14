@@ -11,7 +11,7 @@ moved {
   to   = module.global-logitics-analytics
 }
 module "global-logitics-analytics" {
-  source = "git::https://dev.azure.com/RalphLauren/Azure%20Landing%20Zones/_git/Terraform.DataLandingZone?ref=20241014.6"
+  source = "git::https://dev.azure.com/RalphLauren/Azure%20Landing%20Zones/_git/Terraform.DataLandingZone?ref=feature/databricks-id-fix"
 
   providers = {
     azurerm = azurerm
@@ -130,7 +130,7 @@ module "global-logitics-analytics" {
 
 module "retail-storesystems" {
   # tflint-ignore: terraform_module_pinned_source
-  source = "git::https://dev.azure.com/RalphLauren/Azure%20Landing%20Zones/_git/Terraform.LandingZones?ref=20241014.8"
+  source = "git::https://dev.azure.com/RalphLauren/Azure%20Landing%20Zones/_git/Terraform.LandingZones?ref=feature/vault-fixes"
 
   providers = {
     azurerm = azurerm

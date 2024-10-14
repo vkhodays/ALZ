@@ -11,7 +11,7 @@ moved {
   to   = module.global-logitics-analytics
 }
 module "global-logitics-analytics" {
-  source = "git::https://dev.azure.com/RalphLauren/Azure%20Landing%20Zones/_git/Terraform.DataLandingZone?ref=20241014.3"
+  source = "git::https://dev.azure.com/RalphLauren/Azure%20Landing%20Zones/_git/Terraform.DataLandingZone?ref=feature/access-updates"
 
   providers = {
     azurerm = azurerm

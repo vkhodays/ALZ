@@ -183,6 +183,16 @@ module "retail-storesystems" {
   recovery_services_vault_enabled = true
   recovery_services_vault_use_private_endpoint = true
   recovery_services_vault_enable_public_network_access = false
+
+  virtual_machine_backup_enforcement_policies = {
+    defaultpolicy_southeastasia = {
+        name = "defaultpolicy"
+        location = "southeastasia"
+        inclusion_tag_name = "BackupPolicy"
+        inclusion_tag_values = ["DefaultPolicy"]
+        backup_policy_name = "DefaultPolicy"
+    }
+  }
 }
 
 moved {

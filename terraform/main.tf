@@ -153,8 +153,8 @@ module "retail-storesystems" {
     retail_southeastasia = {
       location = "southeastasia"
       address_space = {
-        npd = ["10.212.8.0/24"]
-        prd = ["10.212.16.0/24"]
+        npd = ["10.212.16.0/24"]
+        prd = ["10.212.8.0/24", "10.212.24.0/28", "10.212.30.0/26"]
       }
 
       dns_servers = ["10.212.0.100"]
@@ -279,58 +279,5 @@ removed {
 
   lifecycle {
     destroy = false
-  }
-}
-
-module "retail-jpluxtrunkshow" {
-  # tflint-ignore: terraform_module_pinned_source
-  source = "git::https://dev.azure.com/RalphLauren/Azure%20Landing%20Zones/_git/Terraform.LandingZones?ref=20240917.4"
-
-  providers = {
-    azurerm = azurerm
-    azuread = azuread
-    azapi   = azapi
-    time    = time
-  }
-
-  primary_location      = "eastus"
-  statefile_pe_location = "southeastasia" # remove this when the eastus region is available
-
-  platform_environment = var.platform_environment
-  app_environment      = var.app_environment
-  billing_scope        = var.billing_scope
-  subscription_ids     = local.subscription_ids
-
-  virtual_networks = {
-    retail_southeastasia = {
-      location = "southeastasia"
-      address_space = {
-        npd = ["10.212.14.0/27"]
-        prd = ["10.212.22.0/27"]
-      }
-
-      dns_servers = ["10.212.0.100"]
-    }
-  }
-
-  rbac = {
-    template_name          = "standard"
-    create_groups          = var.app_environment == "npd"
-    pim_enabled_if_defined = var.pim_enabled
-  }
-
-  directory_roles = [
-    "Directory Readers"
-  ]
-
-  terraform_integration_enabled = false
-  management_group              = "retail-internal"
-  subscription_name             = "retail-jpluxtrunkshow"
-  subscription_tags = {
-    WorkloadName        = "JP Lux Trunk Show"
-    DataClassification  = "General"
-    BusinessCriticality = "High"
-    BusinessUnit        = "Retail"
-    OperationsTeam      = "Retail"
   }
 }

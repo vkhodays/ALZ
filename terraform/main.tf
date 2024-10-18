@@ -130,7 +130,7 @@ module "global-logitics-analytics" {
 
 module "retail-storesystems" {
   # tflint-ignore: terraform_module_pinned_source
-  source = "git::https://dev.azure.com/RalphLauren/Azure%20Landing%20Zones/_git/Terraform.LandingZones?ref=20241016.4"
+  source = "git::https://dev.azure.com/RalphLauren/Azure%20Landing%20Zones/_git/Terraform.LandingZones?ref=20241018.3"
 
   providers = {
     azurerm = azurerm
@@ -185,12 +185,14 @@ module "retail-storesystems" {
   recovery_services_vault_enable_public_network_access = false
 
   virtual_machine_backup_enforcement_policies = {
-    defaultpolicy_southeastasia = {
-        name = "defaultpolicy"
-        location = "southeastasia"
-        inclusion_tag_name = "BackupPolicy"
-        inclusion_tag_values = ["DefaultPolicy"]
-        backup_policy_name = "DefaultPolicy"
+    npd = {
+      defaultpolicy_southeastasia = {
+          name = "defaultpolicy"
+          location = "southeastasia"
+          inclusion_tag_name = "BackupPolicy"
+          inclusion_tag_values = ["DefaultPolicy"]
+          backup_policy_name = "DefaultPolicy"
+      }
     }
   }
 }

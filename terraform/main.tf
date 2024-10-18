@@ -11,7 +11,7 @@ moved {
   to   = module.global-logitics-analytics
 }
 module "global-logitics-analytics" {
-  source = "git::https://dev.azure.com/RalphLauren/Azure%20Landing%20Zones/_git/Terraform.DataLandingZone?ref=20241016.5"
+  source = "git::https://dev.azure.com/RalphLauren/Azure%20Landing%20Zones/_git/Terraform.DataLandingZone?ref=20241018.1"
 
   providers = {
     azurerm = azurerm
@@ -181,8 +181,6 @@ module "retail-storesystems" {
   }
 
   recovery_services_vault_enabled = true
-  recovery_services_vault_use_private_endpoint = true
-  recovery_services_vault_enable_public_network_access = false
 
   virtual_machine_backup_enforcement_policies = {
     npd = {

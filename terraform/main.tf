@@ -130,7 +130,7 @@ module "global-logitics-analytics" {
 
 module "retail-storesystems" {
   # tflint-ignore: terraform_module_pinned_source
-  source = "git::https://dev.azure.com/RalphLauren/Azure%20Landing%20Zones/_git/Terraform.LandingZones?ref=20241018.3"
+  source = "git::https://dev.azure.com/RalphLauren/Azure%20Landing%20Zones/_git/Terraform.LandingZones?ref=feature/pe-subnet-resize"
 
   providers = {
     azurerm = azurerm
@@ -158,6 +158,8 @@ module "retail-storesystems" {
       dns_servers = ["10.212.0.100"]
     }
   }
+
+  private_endpoint_subnet_mask = 26
 
   rbac = {
     template_name          = "standard"

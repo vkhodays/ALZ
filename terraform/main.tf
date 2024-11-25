@@ -287,3 +287,55 @@ removed {
     destroy = false
   }
 }
+module "corporate-manhattanwms" {
+  # tflint-ignore: terraform_module_pinned_source
+  source = "git::https://dev.azure.com/RalphLauren/Azure%20Landing%20Zones/_git/Terraform.LandingZones?ref=20240917.4"
+
+  providers = {
+    azurerm = azurerm
+    azuread = azuread
+    azapi   = azapi
+    time    = time
+  }
+
+  primary_location      = "eastus"
+  statefile_pe_location = "southeastasia" # remove this when the eastus region is available
+
+  platform_environment = var.platform_environment
+  app_environment      = var.app_environment
+  billing_scope        = var.billing_scope
+  subscription_ids     = local.subscription_ids
+
+  virtual_networks = {
+    retail_southeastasia = {
+      location = "southeastasia"
+      address_space = {
+        npd = ["10.212.32.0/27,10.212.32.32/27"]
+        prd = ["10.212.48.0/27,10.212.48.32/27"]
+      }
+
+      dns_servers = ["10.212.0.100"]
+    }
+  }
+
+  rbac = {
+    template_name          = "standard"
+    create_groups          = var.app_environment == "npd"
+    pim_enabled_if_defined = var.pim_enabled
+  }
+
+  directory_roles = [
+    "Directory Readers"
+  ]
+
+  terraform_integration_enabled = false
+  management_group              = "corporate-internal"
+  subscription_name             = "corporate-manhattanwms"
+  subscription_tags = {
+    WorkloadName        = "Manhattan WMS"
+    DataClassification  = "General"
+    BusinessCriticality = "High"
+    BusinessUnit        = "Corporate"
+    OperationsTeam      = "Corporate"
+  }
+}

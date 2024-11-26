@@ -329,7 +329,7 @@ module "corporate-manhattanwms" {
   ]
 
   terraform_integration_enabled = false
-  management_group              = "corporate-internal"
+  management_group              = "corp-internal"
   subscription_name             = "corporate-manhattanwms"
   subscription_tags = {
     WorkloadName        = "Manhattan WMS"

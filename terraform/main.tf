@@ -289,7 +289,7 @@ removed {
 }
 module "corporate-manhattanwms" {
   # tflint-ignore: terraform_module_pinned_source
-  source = "git::https://dev.azure.com/RalphLauren/Azure%20Landing%20Zones/_git/Terraform.LandingZones?ref=20240917.4"
+  source = "git::https://dev.azure.com/RalphLauren/Azure%20Landing%20Zones/_git/Terraform.LandingZones?ref=20241021.5"
 
   providers = {
     azurerm = azurerm

@@ -310,8 +310,8 @@ module "corporate-manhattanwms" {
     retail_southeastasia = {
       location = "southeastasia"
       address_space = {
-        npd = ["10.212.32.0/27,10.212.32.32/27"]
-        prd = ["10.212.48.0/27,10.212.48.32/27"]
+        npd = ["10.212.32.0/26"]
+        prd = ["10.212.48.0/26"]
       }
 
       dns_servers = ["10.212.0.100"]

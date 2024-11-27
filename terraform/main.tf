@@ -307,11 +307,11 @@ module "corporate-manhattanwms" {
   subscription_ids     = local.subscription_ids
 
   virtual_networks = {
-    retail_southeastasia = {
+    corporate_southeastasia = {
       location = "southeastasia"
       address_space = {
-        npd = ["10.212.32.0/26"]
-        prd = ["10.212.48.0/26"]
+        npd = ["10.212.32.0/27"]
+        prd = ["10.212.48.0/27"]
       }
 
       dns_servers = ["10.212.0.100"]
@@ -330,7 +330,7 @@ module "corporate-manhattanwms" {
 
   terraform_integration_enabled = false
   management_group              = "corp-internal"
-  subscription_name             = "corporate-manhattanwms"
+  subscription_name             = "corp-manhattanwms"
   subscription_tags = {
     WorkloadName        = "Manhattan WMS"
     DataClassification  = "General"

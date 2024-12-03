@@ -339,3 +339,55 @@ module "corporate-manhattanwms" {
     OperationsTeam      = "Corporate"
   }
 }
+module "corporate-autodesk" {
+  # tflint-ignore: terraform_module_pinned_source
+  source = "git::https://dev.azure.com/RalphLauren/Azure%20Landing%20Zones/_git/Terraform.LandingZones?ref=20241021.5"
+
+  providers = {
+    azurerm = azurerm
+    azuread = azuread
+    azapi   = azapi
+    time    = time
+  }
+
+  primary_location      = "eastus"
+  statefile_pe_location = "southeastasia" # remove this when the eastus region is available
+
+  platform_environment = var.platform_environment
+  app_environment      = var.app_environment
+  billing_scope        = var.billing_scope
+  subscription_ids     = local.subscription_ids
+
+  virtual_networks = {
+    corporate_eastus = {
+      location = "eastus"
+      address_space = {
+        npd = ["10.232.60.0/26"]
+        prd = ["10.232.24.0/27"]
+      }
+
+      dns_servers = ["10.232.0.196"]
+    }
+  }
+
+  rbac = {
+    template_name          = "standard"
+    create_groups          = var.app_environment == "npd"
+    pim_enabled_if_defined = var.pim_enabled
+  }
+
+  directory_roles = [
+    "Directory Readers"
+  ]
+
+  terraform_integration_enabled = false
+  management_group              = "corp-internal"
+  subscription_name             = "corp-autodesk"
+  subscription_tags = {
+    WorkloadName        = "Autodesk Vault"
+    DataClassification  = "General"
+    BusinessCriticality = "High"
+    BusinessUnit        = "Corporate"
+    OperationsTeam      = "CAD/CAFM Technology"
+  }
+}
